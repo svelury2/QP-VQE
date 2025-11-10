@@ -186,7 +186,8 @@ def HVA_circuit(n_layers):
     #Declare variational parameters (two per layer)
     theta_1 = sp.symarray('theta_1', n_layers)
     theta_2 = sp.symarray('theta_2', n_layers)
-
+    theta_3 = sp.symarray('theta_3', n_layers)
+    
     #Ansatz: for each layer, add two-qubit rotations along each link.
     for idx_layer in range(n_layers):
         for (iz, jz) in links:
@@ -194,7 +195,7 @@ def HVA_circuit(n_layers):
         for (ix, jx) in links:
             circuit.append(RXX_gate(qreg_HVA[ix], qreg_HVA[jx], 2*theta_1[idx_layer]))
         for (iy, jy) in links:
-            circuit.append(RYY_gate(qreg_HVA[iy], qreg_HVA[jy], 2*theta_1[idx_layer]))
+            circuit.append(RYY_gate(qreg_HVA[iy], qreg_HVA[jy], 2*theta_3[idx_layer]))
           
     return circuit
 
