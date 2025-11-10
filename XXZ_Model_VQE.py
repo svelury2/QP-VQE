@@ -210,6 +210,7 @@ def objective(params, hamiltonian, qreg, simulator):
     for idx_layer in range(n_layers):
         params_dict[f'theta_1_{idx_layer}'] = params[idx_layer]
         params_dict[f'theta_2_{idx_layer}'] = params[n_layers + idx_layer]
+        params_dict[f'theta_3_{idx_layer}'] = params[2*n_layers + idx_layer]
     expect = simulator.simulate_expectation_values(ansatz, hamiltonian, params_dict)
     energy = np.real(expect)
     return energy
@@ -312,8 +313,8 @@ if __name__ == '__main__':
     #opt_options = {'maxiter': 10000}
     opt_options = 10000
 
-    # Prepare list of random initial parameters. (Dimension = 2*n_layers.)
-    initial_params_list = [np.random.uniform(0, 2*np.pi, size=2*n_layers)
+    # Prepare list of random initial parameters. (Dimension = 3*n_layers.)
+    initial_params_list = [np.random.uniform(0, 2*np.pi, size=3*n_layers)
                              for _ in range(n_iter)]
     
     # Note: We no longer pass H_XXZ in the tuple.
@@ -339,7 +340,7 @@ if __name__ == '__main__':
     print("*" * 40)
     
     # Save output data
-    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Initial_Parameters_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5.txt', np.array(initial_params_list))
-    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Optimal_Values_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5.txt', np.array(optimal_values))
-    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Optimal_Parameters_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5.txt', np.array(optimal_parameters_collection))
-    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_CF_Evaluations_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5.txt', np.array(cost_function_evals_collection))
+    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Initial_Parameters_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5_Three_Parameters.txt', np.array(initial_params_list))
+    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Optimal_Values_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5_Three_Parameters.txt', np.array(optimal_values))
+    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_Optimal_Parameters_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5_Three_Parameters.txt', np.array(optimal_parameters_collection))
+    np.savetxt('8_Qubit_XXZ_7_Layer_HVA_CF_Evaluations_BOBYQA_GPU_3_Filled_States_Periodic_Boundary_Conditions_PH_State_4_Alternate_Delta_0.5_Three_Parameters.txt', np.array(cost_function_evals_collection))
